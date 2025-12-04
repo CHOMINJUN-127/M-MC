@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <title>M&MC</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    /* 사이드바 메뉴 토글 버튼 스타일 */
+    #menuToggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      z-index: 1001;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #menuToggle:hover {
+      background-color: #f0f0f0;
+    }
+
+    .menu-icon {
+      width: 26px;
+      height: 24px;
+      fill: #333;
+    }
+    
+    /* 사이드바 메뉴 스타일 */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .menu.show {
+      transform: translateX(0);
+    }
+
+    .menu-content {
+      padding-top: 60px;
+      list-style: none;
+    }
+
+    .menu-content li {
+      margin: 0;
+    }
+
+    .menu-content a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-content a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    /* 아이콘 컨테이너 스타일 - 일정한 너비로 정렬 */
+    .menu-icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    /* 텍스트 스타일 */
+    .menu-text {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.2;
+      flex: 1;
+    }
+
+    /* 오버레이 스타일 */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 데모용 컨텐츠 */
+    .demo-content {
+      margin: 100px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+
+    .my_btn {
+  background-color: skyblue;
+  color: white;
+  border: none;
+  
+  width: 100px;
+  height: 30px;
+}
+
+p{
+  text-align: center;
+      margin-top: .90px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+}
+
+   h1{
+      text-align: center;
+      margin-top: 30px;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+
+h1 span:nth-child(1) {
+  color: #1B15B8;
+}
+
+
+
+
+@import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+      * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+.btn-뇌졸중p {
+position: absolute;
+            left: 30%;
+            top: 27%;
+            transform: translateX(-50%);
+            width: 570px;
+            height: 200px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            background-color: rgb(230, 230, 250);  /* 파스텔 라벤더 */
+            color: rgb(75, 0, 130);                /* 진한 보라 */
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+}
+
+
+.btn-뇌졸중p:hover {
+            letter-spacing: 2px;
+            transform: translateX(-50%) scale(1.2);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .btn-뇌졸중p:active {
+        transform: translateX(-50%) scale(1.5);
+            z-index: 10;
+        }
+
+.btn-뇌졸중Y { 
+position: absolute;
+            right: 30%;
+            top: 27%;
+            transform: translateX(50%);
+            width: 570px;
+            height: 200px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            background-color: rgb(240, 255, 240);  /* 민트 그린 */
+            color: rgb(0, 100, 0);                 /* 진한 초록 */
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+}
+
+.btn-뇌졸중Y:hover {
+letter-spacing: 2px;
+            transform: translateX(50%) scale(1.2); /* 수정: translateX(-50%) -> translateX(50%) */
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .btn-뇌졸중Y:active {
+transform: translateX(50%) scale(1.5); /* 수정: translateX(-50%) -> translateX(50%) */
+            z-index: 10;
+        }
+
+.btn-뇌졸중기 { 
+position: absolute;
+            right: 30%;
+            top: 60%;
+            transform: translateX(50%);
+            width: 570px;
+            height: 200px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            background-color: rgb(255, 240, 245);  /* 코랄 핑크 */
+            color: rgb(220, 20, 60);     
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+}
+
+.btn-뇌졸중기:hover {
+letter-spacing: 2px;
+            transform: translateX(50%) scale(1.2); /* 수정: translateX(-50%) -> translateX(50%) */
+            cursor: pointer;
+            z-index: 10;
+        }
+
+.btn-뇌졸중기:active {
+            transform: translateX(50%) scale(1.5); /* 수정: translateX(-50%) -> translateX(50%) */
+            z-index: 10;
+        }
+
+.btn-뇌졸중발{
+position: absolute;
+            left: 30%;
+            top: 60%;
+            transform: translateX(-50%);
+            width: 570px;
+            height: 200px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            background-color: rgb(240, 248, 255);  /* 스카이 블루 */
+            color: rgb(25, 25, 112);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+}
+
+.btn-뇌졸중발:hover {
+letter-spacing: 2px;
+            transform: translateX(-50%) scale(1.2);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* .btn-뇌졸중Y:active {
+  transform: translateX(-50%) scale(1.5);
+            z-index: 10;
+
+        } */
+
+body { 
+  height: 100vh; 
+  margin: 0; 
+  position: relative; 
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item {
+  flex-grow: 1;
+  flex-basis: 200;
+}
+
+/* body{
+  margin: 0px;
+  padding: 0px;
+} */
+
+/* .뇌졸중1 {
+  width: 100px;
+  height: 100px;
+} */
+
+
+  </style>
+
+
+<!-- <style>
+.center-text {
+  text-align: center;
+}
+</style>
+
+<p class="center-text">이 글도 가운데 정렬됩니다.</p> -->
+
+<!-- <div style="text-align: center;">
+  <h2>가운데 제목</h2>
+  <p>가운데로 정렬된 문장입니다.</p>
+</div> -->
+
+
+
+</head>
+<body>
+  <!-- 오버레이 -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- 사이드바 메뉴 토글 버튼 -->
+  <button id="menuToggle" type="button">
+    <svg class="menu-icon" viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </button>
+
+  <!-- 사이드바 메뉴 -->
+  <div class="menu" id="sideMenu">
+    <ul class="menu-content">
+      <li><a href="#" onclick="location.href='123.html'">
+        <span class="menu-icon-container">🏠</span>
+        <span class="menu-text">Home</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test2.html'">
+        <span class="menu-icon-container">🧠</span>
+        <span class="menu-text">뇌졸중</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test3.html'">
+        <span class="menu-icon-container">🫁</span>
+        <span class="menu-text">폐암</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test4.html'">
+        <span class="menu-icon-container">🤧</span>
+        <span class="menu-text">폐렴</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test5.html'">
+        <span class="menu-icon-container">❤️</span>
+        <span class="menu-text">심정질환</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test6.html'">
+        <span class="menu-icon-container">👴</span>
+        <span class="menu-text">알츠하이머</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test7.html'">
+        <span class="menu-icon-container">💉</span>
+        <span class="menu-text">당뇨병</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test8.html'">
+        <span class="menu-icon-container">🆘</span>
+        <span class="menu-text">자살</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test9.html'">
+        <span class="menu-icon-container">💝</span>
+        <span class="menu-text">기부</span>
+      </a></li>
+    </ul>
+  </div>
+
+<!-- 
+  <h1 style="text-align: center;">뇌졸중</h1>
+  <p style="text-align: center;">뇌졸중은 뇌에 혈액을 공급하는 혈관이 막히거나(뇌경색) 또는 터져서(뇌출혈) 뇌 조직이 손상되어 갑자기 신체 마비, 언어 장애, 의식 저하 등 다양한 증상이 나타나는 질환 입니다.</p>
+
+   <p style="text-align: center;">뇌졸중은 고혈압, 당뇨병, 고지혈증, 심방세동 등 만성질환을 잘 관리하고, 규칙적인 운동과 금연, 건강한 식습관을 유지하는 것이 예방에 가장 중요합니다. 특히, 혈압과 혈당을 꾸준히 체크하고 조절하는 것이 필수적입니다.</p> -->
+
+    <h1>
+    <span>M&MC</span>
+  </h1>
+
+  <p>
+    <span>폐암</span>
+  </p>
+
+   
+<div class="뇌졸중1" id="뇌졸중2">
+  <button type="button" class="btn-뇌졸중p" onclick="location.href='폐암P.html'">폐암PDF</button>
+  <button type="button" class="btn-뇌졸중Y" onclick="location.href='폐암Y.html'">폐암 YouTube</button>
+  <button type="button" class="btn-뇌졸중기" onclick="location.href='폐암 기사1.html'">폐암 기사</button>
+  <button type="button" class="btn-뇌졸중발" onclick="location.href='폐암 발생 원인1.html'">폐암 발생 원인</button>
+</div>
+
+
+
+  <!-- 데모용 컨텐츠 -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() { 
+      // 사이드바 메뉴 토글 기능
+      const menuToggle = document.getElementById('menuToggle');
+      const menu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('overlay');
+
+      function toggleMenu() {
+        menu.classList.toggle('show');
+        overlay.classList.toggle('show');
+      }
+
+      function closeMenu() {
+        menu.classList.remove('show');
+        overlay.classList.remove('show');
+      }
+
+      if (menuToggle && menu) {
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+        
+        // ESC 키로 메뉴 닫기
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && menu.classList.contains('show')) {
+            closeMenu();
+          }
+        });
+      }
+
+      // 메뉴 아이템 클릭 이벤트
+      document.querySelectorAll('.menu-content a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const menuItem = this.querySelector('.menu-text').textContent;
+          console.log(`${menuItem} 메뉴가 클릭되었습니다.`);
+          // 여기에 각 메뉴별 기능 구현
+        });
+      });
+    });
+  </script>
+</body>
+</html>

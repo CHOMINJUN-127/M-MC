@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    p{
+  text-align: center;
+      margin-top: .90px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+}
+
+   h1{
+      text-align: center;
+      margin-top: 30px;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+
+h1 span:nth-child(1) {
+  color: #1B15B8;
+}
+
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    /* 사이드바 메뉴 토글 버튼 스타일 */
+    #menuToggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      z-index: 1001;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #menuToggle:hover {
+      background-color: #f0f0f0;
+    }
+
+    .menu-icon {
+      width: 26px;
+      height: 24px;
+      fill: #333;
+    }
+    
+    /* 사이드바 메뉴 스타일 */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 280px;
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .menu.show {
+      transform: translateX(0);
+    }
+
+    .menu-content {
+      padding-top: 60px;
+      list-style: none;
+    }
+
+    .menu-content li {
+      margin: 0;
+    }
+
+    .menu-content a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-content a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    /* 아이콘 컨테이너 스타일 - 일정한 너비로 정렬 */
+    .menu-icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      margin-right: 15px;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    /* 텍스트 스타일 */
+    .menu-text {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.2;
+      flex: 1;
+    }
+
+    /* 오버레이 스타일 */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 데모용 컨텐츠 */
+    .demo-content {
+      margin: 100px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      
+    }
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+
+/* topMenu 전체 영역 스타일 */
+#topMenu {
+    height: 60px;
+    width: 100%;
+    max-width: 500px;
+    background-color: #23395d; /* 소프트 네이비 */
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(35, 57, 93, 0.08);
+    overflow: hidden;
+    margin: 40px auto 0 auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+#topMenu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: 60px;
+    display: flex;
+    width: 100%;
+}
+
+#topMenu ul li {
+    flex: 1;
+    text-align: center;
+    line-height: 60px;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Trebuchet MS', Arial, sans-serif;
+    letter-spacing: 0.02em;
+}
+
+#topMenu ul li a.menuLink {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    height: 60px;
+    transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    border-radius: 0;
+}
+
+#topMenu ul li a.menuLink:hover {
+    color: #23395d;
+    background-color: #2ec4b6; /* 세련된 민트 */
+    box-shadow: 0 2px 8px rgba(46,196,182,0.10);
+    border-radius: 8px;
+}
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+.뇌혈관센터-button {
+  width: 370px;
+  height: 154px;
+  background-color: #40ae77; /* 밝고 산뜻한 연초록 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(23,99,61,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.뇌혈관센터-button:hover {
+  box-shadow: 0 8px 24px rgba(23,99,61,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중진료지침-button {
+  width: 370px;
+  height: 154px;
+  background-color: #56cc91; /* 세련된 중간 초록 */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(78,203,113,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: calc(33% - 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중진료지침-button:hover {
+  box-shadow: 0 8px 24px rgba(78,203,113,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중개요-button {
+  width: 370px;
+  height: 154px;
+  background-color: #1B5E3C; /* 깊고 진한 그린 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(27,94,60,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: calc(67% + 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중개요-button:hover {
+  box-shadow: 0 8px 24px rgba(27,94,60,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+
+/* ----------------------------------------------------------------------------------------------------------- */
+
+.뇌졸중PDF1-button {
+  width: 370px;
+  height: 154px;
+  background-color: #40ae77; /* 밝고 산뜻한 연초록 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(23,99,61,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF1-button:hover {
+  box-shadow: 0 8px 24px rgba(23,99,61,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF2-button {
+  width: 370px;
+  height: 154px;
+  background-color: #56cc91; /* 세련된 중간 초록 */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(78,203,113,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 80%;
+  left: calc(33% - 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF2-button:hover {
+  box-shadow: 0 8px 24px rgba(78,203,113,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF3-button {
+  width: 370px;
+  height: 154px;
+  background-color: #1B5E3C; /* 깊고 진한 그린 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(27,94,60,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 80%;
+  left: calc(67% + 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF3-button:hover {
+  box-shadow: 0 8px 24px rgba(27,94,60,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+/* ------------------------------------------------------------------------------------------------------ */
+.뇌졸중PDF4-button {
+  width: 370px;
+  height: 154px;
+  background-color: #40ae77; /* 밝고 산뜻한 연초록 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(23,99,61,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF4-button:hover {
+  box-shadow: 0 8px 24px rgba(23,99,61,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF5-button {
+  width: 370px;
+  height: 154px;
+  background-color: #56cc91; /* 세련된 중간 초록 */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(78,203,113,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 110%;
+  left: calc(33% - 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF5-button:hover {
+  box-shadow: 0 8px 24px rgba(78,203,113,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF6-button {
+  width: 370px;
+  height: 154px;
+  background-color: #1B5E3C; /* 깊고 진한 그린 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(27,94,60,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 110%;
+  left: calc(67% + 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF6-button:hover {
+  box-shadow: 0 8px 24px rgba(27,94,60,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+/* -------------------------------------------------------------------------------------------------------------------- */
+
+.뇌졸중PDF7-button {
+  width: 370px;
+  height: 154px;
+  background-color: #40ae77; /* 밝고 산뜻한 연초록 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(23,99,61,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF7-button:hover {
+  box-shadow: 0 8px 24px rgba(23,99,61,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF8-button {
+  width: 370px;
+  height: 154px;
+  background-color: #56cc91; /* 세련된 중간 초록 */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(78,203,113,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: calc(33% - 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF8-button:hover {
+  box-shadow: 0 8px 24px rgba(78,203,113,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.뇌졸중PDF9-button {
+  width: 370px;
+  height: 154px;
+  background-color: #1B5E3C; /* 깊고 진한 그린 */
+  color: #E8FFE7;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(27,94,60,0.08);
+  transition: box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
+  position: absolute;
+  top: 140%;
+  left: calc(67% + 250px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF9-button:hover {
+  box-shadow: 0 8px 24px rgba(27,94,60,0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+/* ------------------------------------------------------------------------------------------------------------------- */
+.뇌졸중PDF0-button {
+  width: 45px;
+  height: 45px;
+  background-color: rgb(59, 130, 246); /* 모던 블루 */
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(59, 130, 246);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 165%;
+  left: calc(50% - 60px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF0-button:hover {
+  background-color: rgb(37, 99, 235);
+  border-color: rgb(37, 99, 235);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%) translateY(-1px);
+}
+
+.뇌졸중PDF100-button {
+  width: 45px;
+  height: 45px;
+  background-color: rgb(248, 250, 252); /* 연한 회색 */
+  color: rgb(71, 85, 105);
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 165%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF100-button:hover {
+  background-color: rgb(241, 245, 249);
+  border-color: rgb(203, 213, 225);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+  transform: translate(-50%, -50%) translateY(-1px);
+}
+
+.뇌졸중PDF010-button {
+  width: 45px;
+  height: 45px;
+  background-color: rgb(248, 250, 252); /* 연한 회색 */
+  color: rgb(71, 85, 105);
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 165%;
+  left: calc(50% + 60px);
+  transform: translate(-50%, -50%);
+}
+.뇌졸중PDF010-button:hover {
+  background-color: rgb(241, 245, 249);
+  border-color: rgb(203, 213, 225);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%) translateY(-1px);
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+  width: 45px;
+  height: 45px;
+  background-color: rgb(248, 250, 252);
+  color: rgb(71, 85, 105);
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 170%;
+  left: calc(50% - 120px);
+  transform: translate(-50%, -50%);
+}
+.back-button:hover {
+  background-color: rgb(241, 245, 249);
+  border-color: rgb(203, 213, 225);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%) translateY(-1px);
+}
+
+/* 맨 뒤로가기 버튼 */
+.back-to-start-button {
+  width: 45px;
+  height: 45px;
+  background-color: rgb(248, 250, 252);
+  color: rgb(71, 85, 105);
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 170%;
+  left: calc(50% + 120px);
+  transform: translate(-50%, -50%);
+}
+.back-to-start-button:hover {
+  background-color: rgb(241, 245, 249);
+  border-color: rgb(203, 213, 225);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, -50%) translateY(-1px);
+}
+
+/* -------------------------------------------------------------------------------------------------------- */
+
+
+
+
+
+
+</style>
+
+
+<h1>
+ <span>M&MC</span>
+</h1>
+
+
+<p>
+    <span>심정질환PDF</span>
+</p>
+
+
+
+<button type="button" onclick="location.href='https://dgccvc.or.kr:7450/education/pdf/02_04.pdf'" class="뇌혈관센터-button">뇌혈관센터</button>
+
+<button type="button" onclick="location.href='https://www.stroke.or.kr/file/Stroke_guidelines.pdf'" class="뇌졸중진료지침-button">뇌졸중 진료지침</button>
+
+<button type="button" onclick="location.href='https://www.ksnr.or.kr/file/brain-stroke.pdf'" class="뇌졸중개요-button">뇌졸중 개요와 초기 대응</button>
+
+<button type="button" onclick="location.href='https://dgccvc.or.kr:7450/education/pdf/02_04.pdf'" class="뇌졸중PDF1-button">뇌졸중PDF10</button>
+
+<button type="button" onclick="location.href='https://www.stroke.or.kr/file/Stroke_guidelines.pdf'" class="뇌졸중PDF2-button">뇌졸중PDF11</button>
+
+<button type="button" onclick="location.href='https://www.ksnr.or.kr/file/brain-stroke.pdf'" class="뇌졸중PDF3-button">뇌졸중PDF12</button>
+
+<button type="button" onclick="location.href='https://dgccvc.or.kr:7450/education/pdf/02_04.pdf'" class="뇌졸중PDF4-button">뇌졸중PDF13</button>
+
+<button type="button" onclick="location.href='https://www.stroke.or.kr/file/Stroke_guidelines.pdf'" class="뇌졸중PDF5-button">뇌졸중PDF14</button>
+
+<button type="button" onclick="location.href='https://www.ksnr.or.kr/file/brain-stroke.pdf'" class="뇌졸중PDF6-button">뇌졸중PDF15</button>
+
+<button type="button" onclick="location.href='https://dgccvc.or.kr:7450/education/pdf/02_04.pdf'" class="뇌졸중PDF7-button">뇌졸중PDF16</button>
+
+<button type="button" onclick="location.href='https://www.stroke.or.kr/file/Stroke_guidelines.pdf'" class="뇌졸중PDF8-button">뇌졸중PDF17</button>
+
+<button type="button" onclick="location.href='https://www.ksnr.or.kr/file/brain-stroke.pdf'" class="뇌졸중PDF9-button">뇌졸중PDF18</button>
+
+
+
+<button type="button" onclick="location.href='심정질환P.html'" class="뇌졸중PDF0-button">1</button>
+
+<button type="button" onclick="location.href='심정질환P2.html'" class="뇌졸중PDF100-button">2</button>
+
+<button type="button" onclick="location.href='심정질환P3.html'" class="뇌졸중PDF010-button">3</button>
+
+ <!-- 오버레이 -->
+  <div class="overlay" id="overlay"></div>
+  
+  <!-- 사이드바 메뉴 토글 버튼 -->
+  <button id="menuToggle" type="button">
+    <svg class="menu-icon" viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+    </svg>
+  </button>
+
+  <!-- 사이드바 메뉴 -->
+  <div class="menu" id="sideMenu">
+    <ul class="menu-content">
+      <li><a href="#" onclick="location.href='123.html'">
+        <span class="menu-icon-container">🏠</span>
+        <span class="menu-text">Home</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test2.html'">
+        <span class="menu-icon-container">🧠</span>
+        <span class="menu-text">뇌졸중</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test3.html'">
+        <span class="menu-icon-container">🫁</span>
+        <span class="menu-text">폐암</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test4.html'">
+        <span class="menu-icon-container">🤧</span>
+        <span class="menu-text">폐렴</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test5.html'">
+        <span class="menu-icon-container">❤️</span>
+        <span class="menu-text">심정질환</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test6.html'">
+        <span class="menu-icon-container">👴</span>
+        <span class="menu-text">알츠하이머</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test7.html'">
+        <span class="menu-icon-container">💉</span>
+        <span class="menu-text">당뇨병</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test8.html'">
+        <span class="menu-icon-container">🆘</span>
+        <span class="menu-text">자살</span>
+      </a></li>
+      <li><a href="#" onclick="location.href='test9.html'">
+        <span class="menu-icon-container">💝</span>
+        <span class="menu-text">기부</span>
+      </a></li>
+    </ul>
+  </div>
+
+
+  
+
+<span class="버튼3">
+    <div id="topMenu">
+        <ul>
+            <li><a href="#" class="menuLink" onclick="location.href='심정질환y.html'">심정질환YouTube</a></li>
+            <li><a href="#" class="menuLink" onclick="location.href='심정질환 발생 원인1.html'">심정질환 발생 원인</a></li>
+            <li><a href="#" class="menuLink" onclick="location.href='심정질환 기사1.html'">심정질환 기사</a></li>
+        <!-- <li><a href="#" class="menuLink">메뉴4</a></li> -->
+        </ul>
+    </div>
+</span>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() { 
+      // 사이드바 메뉴 토글 기능
+      const menuToggle = document.getElementById('menuToggle');
+      const menu = document.getElementById('sideMenu');
+      const overlay = document.getElementById('overlay');
+
+      function toggleMenu() {
+        menu.classList.toggle('show');
+        overlay.classList.toggle('show');
+      }
+
+      function closeMenu() {
+        menu.classList.remove('show');
+        overlay.classList.remove('show');
+      }
+
+      if (menuToggle && menu) {
+        menuToggle.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+        
+        // ESC 키로 메뉴 닫기
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && menu.classList.contains('show')) {
+            closeMenu();
+          }
+        });
+      }
+
+      // 메뉴 아이템 클릭 이벤트
+      document.querySelectorAll('.menu-content a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const menuItem = this.querySelector('.menu-text').textContent;
+          console.log(`${menuItem} 메뉴가 클릭되었습니다.`);
+          // 여기에 각 메뉴별 기능 구현
+        });
+      });
+    });
+
+    let currentPage = 1;
+        const totalPages = 6;
+
+        function goToPage(page) {
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            updatePagination();
+            
+            // 페이지 내용 업데이트 (예시)
+            document.querySelector('.content-section h1').textContent = `페이지 ${currentPage} 내용`;
+        }
+
+        function updatePagination() {
+            const container = document.querySelector('.아래버튼');
+            const pageButtons = container.querySelectorAll('.page-btn');
+            
+            // 페이지 버튼 활성화 상태 업데이트
+            pageButtons.forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === currentPage);
+            });
+
+            // 네비게이션 버튼 비활성화 상태 업데이트
+            const prevBtn = container.querySelector('.prev');
+            const nextBtn = container.querySelector('.next');
+            const firstBtn = container.querySelector('.first');
+            const lastBtn = container.querySelector('.last');
+
+            prevBtn.disabled = currentPage === 1;
+            firstBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            lastBtn.disabled = currentPage === totalPages;
+        }
+
+        // 초기 설정
+        updatePagination();
+  </script>
+
+</body>
+</html>
