@@ -106,35 +106,248 @@ M&MC는 __프론트엔드(웹 UI)__ 와 __백엔드(Flask 서버 + AI API)__ 가
 
 이 구조를 통해 __웹 → 서버 → AI → 웹__ 의 흐름을 직접 구현하였다.
 
-## 🖥️ 프론트엔드 코드 설명 (HTML / CSS / JavaScript)
+## Frontend Explanation
 
-### 1. HTML : 화면 구조 설계
+### 1. 프론트엔드의 역할
 
-HTML은 단순한 페이지가 아니라 __의학 서비스 형태의 인터페이스__ 를 목표로 구성되었다.
+본 프로젝트의 프론트엔드는 __사용자와 AI 챗봇 간의 상호작용을 담당하는 UI 계층__ 이다.
+사용자로부터 질문을 입력받고, 서버로 요청을 전송하며, 응답을 화면에 시각적으로 출력하는 역할을 수행한다.
 
-__핵심 구성 요소__
+프론트엔드는 __HTML, CSS, JavaScript__ 로 구성되어 있으며, 단일 페이지에서 모든 동작이 이루어진다.
 
-__사이바 메뉴__
+### 2. HTML 구조 설명
 
-  + 7가지 질병을 각각 독립된 페이지로 연결
-  + 질병별 학습 구조를 명확히 분리
+__HTML__ 은 챗봇 인터페이스의 뼈대 역할을 한다.
+전체 구조는 다음과 같은 목적을 중심으로 설계되었다.
 
-__채팅 컨테이너__ 
+__채팅 메시지 출력 영역__
 
-  + 사용자가 질문을 통해 능동적으로 정보를 탐색
++ 사용자 질문과 AI 응답을 시간 순서대로 표시
 
-__입력창 + 전송 버튼__
++ 여러 메시지를 처리할 수 있도록 스크롤 가능한 구조
 
-  + 검색형 UI가 아닌 _대화형 의료 정보_ 접근을 의도
+__입력 영역__
 
-➡️ 즉, __HTML__ 은 “정보를 나열하는 페이지”가 아니라
-__질문 → 이해 → 학습__ 흐름을 만들기 위한 구조이다.
++ 사용자가 질문을 입력하는 텍스트 입력창
 
-### 2. CSS : 사용자 이해를 돕는 시각적 설계
++ 엔터 또는 버튼 클릭을 통해 질문 전송 가능
 
-CSS는 단순한 꾸미기가 아니라 __정보 전달 효율__ 을 기준으로 설계되었다.
+__전송 버튼__
 
-__채팅 UI__
++ 입력된 질문을 서버로 전달하는 트리거 역할
 
-   + 사용자 / AI 메시지를 색상과 위치로 명확히 구분
+이 구조를 통해 페이지 이동 없이 __하나의 화면에서 연속적인 대화가 가능하도록 구성__ 하였다.
+
+### 3. CSS 스타일링 설명
+
+__CSS__ 는 기능을 방해하지 않는 선에서 __가독성과 구분성__ 을 높이는 데 초점을 두었다.
+
++ 사용자 메시지와 AI 응답을 서로 다른 스타일로 표현하여 대화 흐름을 직관적으로 인식 가능
+
++ 채팅 영역을 고정 크기로 설정하고 내부 스크롤을 사용하여 긴 대화도 자연스럽게 표시
+
++ 전체 레이아웃을 중앙 정렬하여 데스크톱 환경에서 안정적인 화면 구성 유지
+
+디자인 자체보다 __정보 전달과 사용 편의성__ 을 우선으로 설계하였다.
+
+
+### 4. JavaScript 동작 로직 설명
+
+__JavaScript__ 는 프론트엔드에서 가장 핵심적인 역할을 수행한다.
+
+__4.1 사용자 입력 처리__
+
++ 입력창에 작성된 질문을 읽어온다.
+
++ 입력값이 비어 있는 경우 요청을 보내지 않도록 예외 처리한다.
+
+__4.2 서버 요청 전송__
+
++ _fetch_ 를 사용하여 질문을 서버로 전송한다.
+
++ 요청 데이터는 _JSON_ 형식으로 구성하여 전달한다.
+
+### 4.3 응답 수신 및 화면 출력
+
++ 서버로부터 받은 AI 응답을 채팅 메시지 형태로 화면에 추가한다.
+
++ 사용자 질문 → AI 응답 순서가 유지되도록 DOM을 동적으로 조작한다.
+
+이 과정을 통해 __페이지 새로고침 없이 실시간 채팅이 가능한 구조__ 를 구현하였다.
+
+### 5. 프론트엔드 설계 특징
+
++ 단일 HTML 파일 기반의 경량 구조
+
++ JavaScript를 이용한 비동기 통신 처리
+
++ UI와 로직을 명확히 분리하여 코드 가독성 유지
+
++ 서버 내부 동작을 알 필요 없이 응답 결과만 처리하는 구조
+
+이로 인해 프론트엔드는 __AI 로직과 독립적으로 동작__ 하며, 유지보수와 확장이 용이하다.
+
+
+### 6. 프론트엔드 실행 흐름 요약
+
+__1. 사용자가 질문을 입력한다.__
+
+__2. JavaScript가 입력값을 읽어 서버로 전송한다.__
+
+__3. 응답을 수신하면 채팅 영역에 출력한다.__
+
+__4. 같은 과정을 반복하며 대화가 이어진다.__
+
+
+
+### 1. Python과 연결되는 HTML 코드
+
+##### (1) 사용자 입력창
+
+<input type="text" id="userInput" placeholder="질문을 입력하세요">
+
+__설명__
+
++ id="userInput"
+
+→ __JavaScript__ 가 이 입력창을 __직접 선택__ 해서 사용자의 질문을 읽어오기 위한 식별자
+
+이 요소 자체는 Python과 직접 연결되지 않지만
+
+__Python으로 전달될 데이터의 출발점__ 이다.
+
+##### (2) 전송 버튼
+
+<button onclick="sendMessage()">전송</button>
+
+__설명__
+
++ 버튼 클릭 시 __sendMessage()__ 함수 실행
+
++ 이 함수 안에서 __Python 서버로 요청을 보내는 코드가 실행됨__
+
++ 즉, 이 버튼이
+  __사용자 행동 → JavaScript → Python__ 흐름의 시작점이다.
+
+
+##### (3) 채팅 출력 영역
+
+<div id="chatBox"></div>
+
+__설명__
+
++ __Python__ 에서 반환된 응답이 __최종적으로 표시되는 영역__
+
++ __JavaScript__ 가 __Python__ 의 응답 데이터를 받아
+  이 div 내부에 동적으로 추가한다.
+
+### 2. Python과 직접 연결되는 JavaScript 코드
+
+아래 코드는 __프론트엔드와 Flask를 실제로 연결하는 핵심 코드__ 다.
+
+
+##### (1) 사용자 질문을 서버로 보내는 함수
+
+function sendMessage() {
+  const input = document.getElementById("userInput");
+  const message = input.value;
+
+  if (message.trim() === "") return;
+
+  fetch("/ask", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ question: message })
+  })
+  .then(response => response.json())
+  .then(data => {
+    addMessage("AI", data.answer);
+  });
+
+  addMessage("User", message);
+  input.value = "";
+}
+
+
+### 3. 코드 줄 단위 설명 (Python 연결 중심)
+
+##### 1. 입력값 읽기
+
+const input = document.getElementById("userInput");
+const message = input.value;
+
++ HTML의 id="userInput" 요소에서 사용자 질문을 가져온다.
+
++ 이 값이 __Python으로 전달될 실제 데이터__ 이다.
+
+##### 2. 빈 입력 방지
+
+if (message.trim() === "") return;
+
++ 의미 없는 요청이 Python 서버로 전달되는 것을 방지
+
++ 서버 부하와 오류 가능성을 줄이기 위한 처리
+
+##### 3. Python 서버로 요청 전송
+
+fetch("/ask", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ question: message })
+})
+
+__이 부분이 Python과 연결되는 핵심이다.__
+
++ /ask
+  → Flask에서 정의된 Python API 엔드포인트
+
++ method: "POST"
+  → Python의 @app.route("/ask", methods=["POST"])와 대응
+
++ body
+  → { question: message } 형태로 JSON 데이터 전달
+  → Python에서는 이 데이터를 받아 AI 처리 수행
+
+__👉 이 한 줄로 프론트엔드와 파이썬이 연결된다.__
+
+
+##### 4. Python 응답 수신
+
+.then(response => response.json())
+.then(data => {
+  addMessage("AI", data.answer);
+});
+
+
++ Python이 반환한 JSON 응답을 JavaScript가 수신
+
++ data.answer
+  → Python 코드에서 생성한 AI 응답
+
++ 이 응답을 화면에 출력
+
+##### 5. 사용자 메시지와 화면 갱신
+
+addMessage("User", message);
+input.value = "";
+
++ 사용자 질문을 즉시 화면에 출력
+
++ 입력창 초기화
+
+### 4. Python과 연결되는 흐름 요약
+
+수식처럼 정리하면 다음과 같다.
+
+__사용자 입력 → HTML → JavaScript → fetch 요청 → Python(/ask) → 응답 → JavaScript → HTML 출력__
+
+이 구조 덕분에:
+
++ 프론트엔드는 AI 로직을 전혀 몰라도 되고
+
++ Python은 UI 구조를 알 필요가 없다
 
