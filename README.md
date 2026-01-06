@@ -351,3 +351,4 @@ __사용자 입력 → HTML → JavaScript → fetch 요청 → Python(/ask) →
 
 + Python은 UI 구조를 알 필요가 없다
 
+=====
