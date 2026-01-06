@@ -542,3 +542,12 @@ AI 응답은 JSON 형태로 프론트엔드에 반환된다.
 __HTML 입력 → JavaScript(fetch) → Flask(/ask) → Groq API → Flask → JavaScript → HTML 출력__
 
 이 구조를 통해 __프론트엔드와 백엔드가 명확히 분리된 AI 챗봇 시스템__ 이 완성된다.
+
+
+
+--------------------
+
+
+
+## Backend Code Explanation (Python / Flask)
+
