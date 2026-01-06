@@ -102,32 +102,7 @@ M&MC는 __프론트엔드(웹 UI)__ 와 __백엔드(Flask 서버 + AI API)__ 가
 
 ## 🏗️ 전체 시스템 구조
 
-사용자 (브라우저)
 
-
-   ↓ 질문 입력
-   
-Frontend (HTML / CSS / JS)
-
-
-   ↓ fetch 요청
-   
-Backend (Flask 서버)
-
-
-   ↓
-   
-Groq API (LLM)
-
-
-   ↓
-   
-질병 설명 생성
-
-
-   ↓
-   
-Frontend 채팅창 출력
 
 이 구조를 통해 __웹 → 서버 → AI → 웹__ 의 흐름을 직접 구현하였다.
 
