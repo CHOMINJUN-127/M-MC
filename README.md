@@ -102,7 +102,7 @@ M&MC는 __프론트엔드(웹 UI)__ 와 __백엔드(Flask 서버 + AI API)__ 가
 
 ## 🏗️ 전체 시스템 구조
 
-![웹 구조 설명](https://github.com/CHOMINJUN-127/M-MC/blob/main/%EC%9B%B9%20%EA%B5%AC%EC%A1%B0%20%EC%84%A4%EB%AA%85.png)
+![웹 설명](https://github.com/CHOMINJUN-127/M-MC/blob/main/%EC%9B%B9%20%EC%84%A4%EB%AA%85.png)
 
 이 구조를 통해 __웹 → 서버 → AI → 웹__ 의 흐름을 직접 구현하였다.
 
