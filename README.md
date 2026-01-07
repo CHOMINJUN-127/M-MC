@@ -549,5 +549,176 @@ __HTML 입력 → JavaScript(fetch) → Flask(/ask) → Groq API → Flask → J
 
 
 
+
+
 ## Backend Code Explanation (Python / Flask)
+
+### 🪧1. 필요한 라이브러리 불러오기
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import os
+from dotenv import load_dotenv
+from groq import Groq
+
+__설명__
+
++ Flask
+
+→ 파이썬으로 웹 서버를 만들기 위한 프레임워크
+
++ request
+
+→ 프론트엔드에서 전달된 요청 데이터를 받기 위해 사용
+
++ jsonify
+
+→ 응답을 JSON 형식으로 반환하기 위해 사용
+
++ CORS
+
+→ 프론트엔드의 JavaScript 요청을 허용하기 위해 사용
+
++ load_dotenv, os
+
+→ .env 파일에 저장된 API 키를 불러오기 위해 사용
+
++ Groq
+
+→ AI 모델을 호출하기 위한 클라이언트
+
+### 2. 환경 변수 로드 및 API 키 설정
+
+load_dotenv()
+api_key = os.getenv("GROQ_API_KEY")
+
+if not api_key:
+    raise ValueError("API 키가 설정되지 않았습니다.")
+
+__설명__
+
++ .env 파일에 저장된 환경 변수를 로드
+
++ GROQ_API_KEY를 읽어와 API 인증에 사용
+
++ 키가 없을 경우 프로그램을 중단하여 오류를 사전에 방지
+
+__→ 보안과 안정성을 고려한 설계__
+
+
+### 3. Flask 앱 및 CORS 초기화
+
+app = Flask(__name__)
+CORS(app)
+
+__설명__
+
++ Flask 애플리케이션 생성
+
++ CORS 허용을 통해 프론트엔드의 fetch 요청이 차단되지 않도록 설정
+
+### 4. Groq 클라이언트 생성
+
+client = Groq(api_key=api_key)
+
+__설명__
+
++ Groq API와 통신하기 위한 클라이언트 생성
+
++ 이후 모든 AI 응답은 이 객체를 통해 생성됨
+
+### 5. 메인 페이지 라우트 (/)
+
+@app.route("/")
+def index():
+    return open("index.html", encoding="utf-8").read()
+
+__설명__
+
++ 브라우저에서 서버 주소로 접속 시 HTML 파일 반환
+
++ 프론트엔드 UI를 서버에서 직접 제공
+
+### 6. AI 응답 처리 라우트 (/ask)
+
+@app.route("/ask", methods=["POST"])
+def ask():
+    data = request.get_json()
+    question = data.get("question")
+
+__설명__
+
++ JavaScript의 fetch("/ask") 요청을 받는 부분
+
++ 요청 본문(JSON)에서 question 값을 추출
+
++ 이 값이 __프론트엔드에서 입력한 질문__
+
+### 7. 입력값 검증
+
+if not question:
+    return jsonify({"answer": "질문이 전달되지 않았습니다."})
+
+__설명__
+
++ 질문이 비어 있는 경우를 처리
+
++ 서버 오류를 방지하고 안정적인 동작 보장
+
+### 8. AI 모델 호출
+
+completion = client.chat.completions.create(
+    model="llama-3.3-70b-versatile",
+    messages=[
+        {"role": "user", "content": question}
+    ]
+)
+
+__설명__
+
++ 프론트엔드에서 받은 질문을 AI 모델에 전달
+
++ messages 구조를 통해 대화 형식으로 입력
+
++ 모델이 응답을 생성함
+
+### 9. AI 응답 추출
+
+answer = completion.choices[0].message.content
+
+__설명__
+
++ AI가 생성한 결과 중 실제 텍스트만 추출
+
++ 불필요한 메타데이터 제거
+
+### 10. 프론트엔드로 응답 반환
+
+return jsonify({"answer": answer})
+
+
+__설명__
+
++ AI 응답을 JSON 형식으로 반환
+
++ JavaScript에서 data.answer로 접근 가능
+
++ 이 응답이 채팅 UI에 출력됨
+
+### 11. 서버 실행
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+__설명__
+
++ 파이썬 파일 실행 시 Flask 서버 시작
+
++ 서버가 실행된 이후 프론트엔드 요청 처리 가능
+
+## 파이썬 코드 흐름 요약
+
+수식처럼 정리하면 다음과 같다.
+
+__JavaScript 요청 → /ask → JSON 데이터 수신 → AI 모델 호출 → 응답 생성 → JSON 반환__
 
