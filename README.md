@@ -2,6 +2,8 @@
 
 + 의학 전용 웹 사이트
 
++ 링크 : https://chominjun-127.github.io/M-MC/
+
 + M&MC는 __Medical & Machine Connection__ 의 약자로, 의료 __(Medical)__ 와 컴퓨터 __(Computer)__ 를 연결한다는 의미를 담고 있다.
 ------
 ## 📌 프로젝트 개요
